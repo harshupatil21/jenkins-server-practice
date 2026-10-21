@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Getting latest code from GitHub'
+                checkout scm
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building website'
+
+                sh '''
+                    test -f index.html
+                    echo "Website build successful"
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing website'
+
+                sh '''
+                    test -s index.html
+                    echo "Website test passed"
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying website to server'
+
+                sh '''
+                    mkdir -p ~/practice-server
+                    cp index.html ~/practice-server/
+                '''
+
+                echo 'Deployment completed'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully'
+        }
+
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
+}
