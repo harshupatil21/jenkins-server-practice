@@ -37,9 +37,9 @@ pipeline {
     steps {
         echo 'Deploying website'
         sh '''
-            mkdir -p "$HOME/practice-server"
+            mkdir -p "$HOME/practice-serverr"
             cp index.html "$HOME/practice-server/"
-            ls -l "$HOME/practice-server/"
+            ls -l "$HOME/practice-serverr/"
         '''
         echo 'Deployment completed'
      }
