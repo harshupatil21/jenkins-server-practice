@@ -34,18 +34,17 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                echo 'Deploying website to server'
-
-                sh '''
-                    mkdir -p ~/practice-server
-                    cp index.html ~/practice-server/
-                '''
-
-                echo 'Deployment completed'
-            }
-        }
-    }
+    steps {
+        echo 'Deploying website'
+        sh '''
+            mkdir -p "$HOME/practice-server"
+            cp index.html "$HOME/practice-server/"
+            ls -l "$HOME/practice-server/"
+        '''
+        echo 'Deployment completed'
+     }
+   }
+ }
 
     post {
         success {
