@@ -32,9 +32,9 @@ pipeline {
         echo 'Deploying to production'
 
         sh '''
-            mkdir -p production-server
-            cp index.html production-server/
-            ls -l production-server/
+            mkdir -p /home/harshu/production-server
+            cp index.html /home/harshu/production-server/
+            ls -l /home/harshu/production-server/
         '''
 
         echo 'Production deployment completed'
