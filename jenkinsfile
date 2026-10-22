@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Getting latest code from GitHub'
+                echo 'Getting main branch code'
                 checkout scm
                 sh 'git log -1 --oneline'
             }
@@ -13,46 +13,42 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building website'
-
-                sh '''
-                    test -f index.html
-                    echo "Website build successful"
-                '''
+                echo 'Building production website'
+                sh 'test -f index.html'
+                echo 'Build successful'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing website'
-
-                sh '''
-                    test -s index.html
-                    echo "Website test passed"
-                '''
+                echo 'Testing production website'
+                sh 'test -s index.html'
+                echo 'Test passed'
             }
         }
 
         stage('Deploy') {
     steps {
-        echo 'Deploying website'
+        echo 'Deploying to production'
+
         sh '''
-            mkdir -p "$HOME/practice-serverr"
-            cp index.html "$HOME/practice-serverr/"
-            ls -l "$HOME/practice-serverr/"
+            mkdir -p production-server
+            cp index.html production-server/
+            ls -l production-server/
         '''
-        echo 'Deployment completed'
-     }
-   }
- }
+
+        echo 'Production deployment completed'
+    }
+}
+    }
 
     post {
         success {
-            echo 'Pipeline completed successfully'
+            echo 'Production pipeline completed successfully'
         }
 
         failure {
-            echo 'Pipeline failed'
+            echo 'Production pipeline failed'
         }
     }
 }
